@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<http auto-config="true"  use-expressions="true">
+		<intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')" />
+
+		<form-login login-page="/user/login.xhtml"
+		 	authentication-failure-url="/user/login.jsp?login_error=1"
+			default-target-url="/index.xhtml"
+			authentication-success-handler-ref="authenticationSuccessHandler"
+			/>   
+		
+		<!-- logout page -->
+		<logout logout-success-url="/index.xhtml" invalidate-session="true"/>
+		
+		<!-- access denied page -->
+		<access-denied-handler error-page="/common/deny.xhtml" />
+	</http>
+	
+	<beans:bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+    	<!-- After login, return to the last visited page -->
+    	<beans:property name="useReferer" value="true" />
+	</beans:bean>
+	
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="customUserDetailService">
+			<password-encoder hash="plaintext" />
+		</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+</h:head>
+
+<h:body>
+	<ui:composition template="../template/gridDashboardLayout.xhtml">
+		<ui:define name="leftsidebar">
+			<h:outputStylesheet library="css" name="hover-min.css"  />
+			<h:form id="form-menu">
+			<p:growl id="growl" life="2000" />
+   			<p:dataList value="#{dataGridCategoryView.categories}" var="category" type="ordered" styleClass="lst-categories-menu">
+   				<f:facet name="header">
+		            Fruit Category
+		        </f:facet>
+				<p:commandLink id="ajax" styleClass="hvr-float-shadow" update=":form-shopping:products" actionListener="#{dataGridProductView.getProductByCategoryId}">
+					<h:graphicImage value="/images/#{category.image}?type=category" width="50"/>
+		        	<span class="span-category-name">#{category.name} Category</span>
+					<f:param name="selectedCategoryId" value="#{category.id}" />
+			    </p:commandLink>
+		    </p:dataList>
+		    </h:form>
+   		</ui:define>
+   		
+		<ui:define name="content">
+			<p:growl id="growl" showDetail="false" life="2000" />
+   			<h1><h:outputText id="display-selected-category-name" value="#{dataGridProductView.selectedCategory.name}" /></h1>
+			<div id="categoryDescriptionTop">
+				<p><h:outputText id="display-selected-category-description" value="#{dataGridProductView.selectedCategory.description}" /></p>
+			</div>
+			<h:form id="form-shopping">
+				<div class="catalog-view-thumb2 catalog-products clearfix ">
+				    <div class="catalog-list">
+				    	<p:dataGrid var="product" value="#{dataGridProductView.products}" columns="1" layout="grid"
+					        rows="4" paginator="true" id="products" paginatorPosition="bottom"
+					        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					        rowsPerPageTemplate="5,10,15">
+					 		<!-- 
+					        <p:panel header="#{product.id}" style="text-align:center">
+					            <h:panelGrid columns="1" style="width:100%">
+					                <p:graphicImage name="demo/images/car/#{car.brand}.gif"/> 
+					 
+					                <h:outputText value="#{product.name}" />
+					            </h:panelGrid>
+					        </p:panel> -->
+					        <div class="catalog-product">
+		                        <div class="col-wrap gap-bottom">
+		                            <h5 class="catalog-product-title "><a href="#">#{product.name}</a></h5>
+		                            <div>
+			                            <div class="col-40 gap-top col-20-percent">
+			                                <div class="catalog-product-image ">
+			                                    <a href="#">
+			                                    <h:graphicImage value="/images/#{product.image}" />
+			                                    </a>
+			                                </div>
+			                            </div>
+			                          	<div class="col-80-percent float-right">
+			                            <table id="tbl-product">
+			                            	<tr>
+			                            		<td class="product-info">
+			                            			<div class="col-40">
+						                                <div class="catalog-product-id ">Product ID : #{product.code}</div>
+						                                <div class="catalog-product-price price "></div>
+						                                <div class="catalog-product-sale-price ">
+						                                    <span class="price-label invisible">Price:</span> <span class="price-amount">€ #{product.salePrice} / <small>250 gms</small></span>
+						                                </div>
+						                            </div>
+			                            		</td>
+			                            		<td class="product-price">
+			                            			<div class="col-40">
+						                                <div class="product-quantity field first">
+															<div>
+																<h:outputLabel for="quantity" value="Quantity unit(s)" styleClass="label-quantity" />
+																<p:inputText styleClass="input-quantity" required="true" id="quantity" value="#{product.userQuantity}" />
+																<pe:keyFilter for="quantity" mask="num"/>  
+					                            			</div>
+					                            			<div class="product_season_available">Available</div>
+														</div>
+						                            </div>
+			                            		</td>
+			                            		<td>
+			                            			<div class="gap-left product-add-container">
+						                                <div class="catalog-product-add float-right">
+						                                    <div class="product_new_season">
+						                                    	<p:commandLink value="Add to Cart" styleClass="button-click-to-view" action="#{shop.addToCart(product)}" update="product-message" />
+					                                    	</div>
+						                                </div>
+						                                <div class="product-validate-message float-right"><h:outputText id="product-message" value="#{product.message}" /></div>
+						                            </div>
+			                            		</td>
+			                            	</tr>
+			                            	<tr>
+			                            		<td colspan="3">
+			                            			<div class="gap-left">
+						                                <div class="catalog-product-description">
+						                                    <div class="catalog-product-id">Description: </div>
+						                                    <p class="catalog-product-id"><h:outputText value="#{product.description}" /></p>
+						                                </div>
+						                            </div>
+			                            		</td>
+			                            	</tr>
+			                            </table>
+			                            </div>
+		                            </div>
+		                        </div>
+		                    </div>
+					    </p:dataGrid>
+					</div>
+				</div>
+			 	<!-- 
+			    <p:dialog header="Product Info" widgetVar="productDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+			        <p:outputPanel id="productDetail" style="text-align:center;">
+			            <p:panelGrid  columns="2" rendered="#{not empty dataGridProductView.selectedProduct}" columnClasses="label,value">
+			 
+			                <h:outputText value="Id:" />
+			                <h:outputText value="#{dataGridProductView.selectedProduct.id}" />
+			 
+			                <h:outputText value="Year" />
+			                <h:outputText value="#{dataGridProductView.selectedProduct.year}" />
+			 
+			                <h:outputText value="Price" />
+			                <h:outputText value="$#{dataGridProductView.selectedProduct.price}" />
+			            </p:panelGrid>
+			        </p:outputPanel>
+			    </p:dialog> -->
+			</h:form>
+   		</ui:define>
+   		
+   		<ui:define name="rightsidebar">
+   			<div id="product-offers">
+				<div class="product-offer-in">
+					<a href="#">
+						<h:graphicImage library="images" name="gift_basket.jpg" width="100%" alt="gift baskets" />
+					</a>
+				</div>
+				<div class="product-offer-in">
+					<a href="#">
+						<h:graphicImage library="images" name="with_love_gift.jpg" width="100%" alt="with love" />
+					</a>
+				</div>
+				<div class="product-offer-in">
+					<a href="#">
+						<h:graphicImage library="images" name="rainbow_combo_pack.jpg" width="100%" alt="rainbow combo pack" />
+					</a>
+				</div>
+			</div>
+   			<!-- 
+   			<p:dataList value="#{dataGridCategoryView.categories}" var="category" type="ordered">
+		        <f:facet name="header">
+		            Category
+		        </f:facet>
+		        Name: #{category.name}
+		        <f:facet name="description">
+		            <p:graphicImage name="demo/images/car/#{car.brand}.gif"/> 
+		        </f:facet>
+		    </p:dataList> -->
+   		</ui:define>
+	</ui:composition>
+</h:body>
+    
+</html>

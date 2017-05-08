@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+</h:head>
+
+<h:body>
+	<ui:composition template="../template/gridLayout.xhtml">
+
+		<ui:define name="content">
+			<div class="container-main clearfix">
+			    <div class="doc1024x768C container-wrap clearfix">
+			        <div id="main" class="clearfix">
+			            <div id="content" class="layout-zone-content layout-zone clearfix " style="width: 980px;">
+			                <div class="page-cart wrap">
+			                    <h1>Your Cart</h1>
+			                    <div class="clearfix">
+			                        <h:form id="cart-form" prependId="false">
+			                            <div class="gap-right gap-top">
+			                                <div class="col-wrap clearfix">
+			                                    <div class="col-50">&nbsp;</div>
+			                                </div>
+			                            </div>
+			                                        
+			                            <p:dataTable var="order" value="#{cartView.orders}" id="dtOrderCart" styleClass="borderless list cart"
+					                         rows="5" paginator="true" paginatorPosition="bottom"
+					                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					                         rowsPerPageTemplate="5,10,15">
+			                            	<p:columnGroup type="header">
+									            <p:row>
+									                <p:column headerText="Description" styleClass="col-description"/>
+									                <p:column headerText="Price (250gms)" styleClass="text-center col-price" />
+									                <p:column headerText="Quantity" />
+									                <p:column headerText="Total"  styleClass="text-right col-total"/>
+									            </p:row>
+									        </p:columnGroup>
+			                            
+										    <p:column>
+										        <div class="cart-image cart-image-des">
+		                                            <a href="#">
+		                                            	<h:graphicImage style="width:80px;margin-right:10px;margin-bottom:10px;" value="/images/#{order.image}" alt="#{order.productName}" title="#{order.productName}"/>
+	                                            	</a>
+		                                        </div>
+		                                        <div class="cart-description">
+			                                            <div>
+			                                                <a href="#">#{order.productName}</a>
+			                                            </div>
+			                                            <div>
+			                                                <span class="product-id">Product ID: #{order.productCode}</span><br/>
+			                                            </div>
+			                                            <div>
+			                                                <p>
+			                                                    <span>
+				                                                    <a href="#">
+				                                                    	<h:graphicImage library="images" name="image-delete-item.gif" alt="Delete Item" styleClass="image-delete-item" />
+			                                                    	</a>
+				                                                    <p:commandButton value="Remove" styleClass="borderless button-as-link" action="#{cartView.removeCartOrder(order)}" update="dtOrderCart">
+																        <p:confirm header="Confirmation" message="Are you sure you want to remove this product?" icon="ui-icon-alert" />
+																    </p:commandButton>
+			                                                    </span>
+			                                                    <span class="clearfix">
+				                                                    <a href="#">
+				                                                    	<h:graphicImage library="images/icons" name="update-cart-icon.png" alt="Update Item" width="13" styleClass="image-cart-update-item" />
+			                                                    	</a>
+				                                                    <p:commandLink value="Update" styleClass="cart-update" action="#{cartView.updateProductToCart(order)}" update="dtOrderCart" />
+			                                                    </span>
+			                                                </p>
+			                                            </div>
+			                                        </div>
+										    </p:column>
+										 
+										    <p:column>
+										        <div class="cart-amount text-right">
+			                                            <h:outputText value="€ #{order.price} / unit"/>
+		                                        </div>
+										    </p:column>
+										    <p:column>
+										        <div class="cart-quantity text-center">
+		                                            <p:inputText styleClass="input-quantity quantity" required="true" id="quantity" value="#{order.quantity}" maxlength="10" />
+														<pe:keyFilter for="quantity" mask="num"/>
+													<div class="cart-validate-message"><h:outputText id="order-message" value="#{order.message}" /></div>
+		                                        </div>
+										    </p:column>
+										    <p:column>
+										        <div class="cart-amount text-right">
+			                                            <h:outputText value="€ #{order.totalAmount}"/>
+		                                        </div>
+										    </p:column>
+										    
+										    <!-- Footer -->
+										    <f:facet name="footer">
+										        <div class="text-left"><a href="#{request.contextPath}/shop/shopping.xhtml" id="form-cart-continue-shopping">Continue Shopping</a></div>
+										    </f:facet>
+										</p:dataTable>
+										<!-- Dialog confirm -->
+										<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+									        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+									    </p:confirmDialog>
+									    
+			                            <div class="cart-other-options col-wrap clearfix">
+			                                <div class="col-50">&nbsp;</div>
+			                                <div class="cart-totals col-50 col-right clearfix">
+			                                    <div class="spacer gap-left clearfix">
+			                                        <ul>
+			                                            <li class="cart-amount cart-amount-subtotal">Total Amount: € <h:outputText value="#{cartView.totalAmount}" id="cart-amount-total"/></li>
+			                                        </ul>
+			                                        <div class="col-wrap clearfix">
+			                                            <div class="gap-top">
+			                                                <div class="col-right gap-left -gap-right div-checkout-button">
+			                                                    <h:commandButton type="submit" id="checkout2" styleClass="button-checkout submit" value="Proceed to Checkout" action="#{shop.checkout}" />
+			                                                </div>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </h:form>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+   		</ui:define>
+	</ui:composition>
+</h:body>
+    
+</html>

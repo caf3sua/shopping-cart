@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+	
+    </h:head>
+    
+    <h:body>
+
+	<div id="page">
+		
+		<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+	        <p:layoutUnit position="north" id="north" >
+	            <ui:include src="commonHeader.xhtml" />
+	        </p:layoutUnit>
+	
+	        <p:layoutUnit position="west" id="west" resizable="false" style="height:580px;overflow:hidden;" size="225">
+	            <ui:insert name="menu" />
+	        </p:layoutUnit>
+	
+	        <p:layoutUnit styleClass="layoutUnitCenter" position="center">
+	            <h:form id="mainForm">
+	                <p:messages autoUpdate="true" id="msgs" showDetail="true" showSummary="true" />
+	                <ui:insert name="content" />
+	            </h:form>
+	        </p:layoutUnit>
+	
+	        <p:layoutUnit position="south" resizable="false" id="south">
+	            <ui:include src="commonFooter.xhtml" />
+	        </p:layoutUnit>
+	    </p:layout>
+    </div>
+
+    </h:body>
+</html>

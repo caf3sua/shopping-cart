@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+</h:head>
+
+<h:body>
+	<ui:composition template="../template/gridLayout.xhtml">
+		<ui:define name="content">
+			<div class="container-main clearfix">
+			    <div class="doc1024x768C container-wrap clearfix">
+			        <div id="main" class="clearfix">
+			            <div id="content" class="layout-zone-content layout-zone clearfix " style="width: 980px;">
+			                <div class="page-login wrap">
+			                    <div class="col-wrap" id="opc_login_form_enc">
+			                        <div class="col-40 col-left">
+			                            <div class="spacer">
+			                                <h:form id="loginForm" prependId="false">
+			                                	<!-- Messages must be global here, to show bad credentials -->
+			                                    <div class="fieldset">
+			                                        <div class="field newcust">
+			                                            <div class="new_tip" style="display:none;">
+			                                                Select and fill the following form to register with us
+			                                            </div>
+			                                            <div class="clearfix login_land">
+			                                            </div>
+			                                        </div>
+			                                        <div class="field registered">
+			                                            <div class="clearfix login_land">
+			                                                <div id="login_frame">
+			                                                    <div class="field">
+			                                                        <div class="new_tip" style="display:none;">
+			                                                            Enter your username
+			                                                        </div>
+			                                                        <label for="j_username" class="chk">Username</label>
+			                                                        <h:inputText id="j_username" styleClass="chk_input login-username tip_input" required="true" label="username" value="#{user.loginBean.userName}" />  
+															    	<h:message for="j_username" display="text" style="color:red"/>
+			                                                    </div>
+			                                                    <div class="field">
+			                                                        <div class="new_tip" style="display:none;">
+			                                                            Enter your password with which you have registered with us
+			                                                        </div>
+			                                                        <label for="j_password" class="chk">Password</label>
+															    	<h:inputSecret id="j_password" maxlength="10" styleClass="login-password chk_input tip_input" label="password" required="true" value="#{user.loginBean.password}" />  
+															    	<h:message for="j_password" display="text" style="color:red"/>
+			                                                    </div>
+			                                                    <div class="field">
+			                                                        <div class="new_tip" style="display:none;">
+			                                                            Remember me?
+			                                                        </div>
+			                                                        <h:selectBooleanCheckbox id="_spring_security_remember_me" styleClass="input-remember-me tip_input"/>
+			                                                        <label id="label-input-verify-password" class="label-remember-me tip_input" for="_spring_security_remember_me">Remember me?</label>
+			                                                    </div>
+			                                                    <div class="field" style="float:left;width:222px;">
+			                                                        <a href="#">Register</a>
+			                                                        <div style="float: right; margin-right: 0px;">
+			                                                            <h:commandButton type="submit" id="login" styleClass="button-login submit" value="Login" action="#{user.login}" />
+			                                                        </div>
+			                                                    </div>
+			                                                </div>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                </h:form>
+			                            </div>
+			                        </div>
+			                        <div class="col-60">
+			                            <div class="spacer">
+			                                <div class="login_left_sep">
+			                                    <h:graphicImage library="images" name="sign_or.jpg" alt="login_separator" />
+			                                </div>
+			                                <div class="login_left_sep_2">
+			                                    <a class="fb_button_sign" href="javascript: openwindow()">
+			                                    <h:graphicImage library="images" name="frrutto_fb_sign.jpg" alt="facebook sign in" />
+			                                    </a>
+			                                    <a href="javascript: openwindowg()">
+			                                    <h:graphicImage library="images" name="frrutto_google_sign.jpg" alt="Google sign in" />
+			                                    </a>
+			                                </div>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+   		</ui:define>
+	</ui:composition>
+</h:body>
+    
+</html>

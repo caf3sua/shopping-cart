@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<body>
+	<ui:composition>
+		<h:outputStylesheet library="css" name="style.css"  />
+		<div class="container-footer clearfix">
+		    <div class="copyright" align="center">
+		        <p>© 2014 webware. All Rights Reserved.</p>
+		    </div>
+		    <div class="doc1024x768C container-wrap  clearfix">
+		        <div id="footer" class="layout-zone-footer layout-zone ">
+		            <div id="footer-in">
+		                <div class="footer_layer_1">
+		                    <div class="footer_sub_1">
+		                        <div class="footer_sub_head" align="center"><b>Shop with Trust</b></div>
+		                        <div class="footer_sub_content" align="center">
+		                            <h:graphicImage library="images" name="visa.gif" />
+		                            <h:graphicImage library="images" name="maestro.gif" />
+		                            <h:graphicImage library="images" name="master.gif" />
+		                            <div class="footer_sub_content_2" align="center">
+		                                <p>Debit Cards, Net Banking - All Leading Banks</p>
+		                                <p>Cash on Delivery</p>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="footer_sub_2">
+		                        <div class="footer_sub_head" align="center"><b>Follow Us on</b></div>
+		                        <div class="footer_sub_content" align="center">
+		                            <a target="_blank" href="https://www.facebook.com/webware">
+		                            	<h:graphicImage library="images" name="facebook.gif" />
+		                            </a>
+		                            <a target="_blank" href="https://twitter.com/webware">
+		                            	<h:graphicImage library="images" name="twitter.gif" />
+		                            </a>
+		                            <a target="_blank" href="http://pinterest.com/webware/">
+		                            	<h:graphicImage library="images" name="pinterest.gif" />
+		                            </a>
+		                        </div>
+		                    </div>
+		                    <div class="footer_sub_1">
+		                        <div class="footer_sub_content" align="center">
+		                        	<h:graphicImage library="images" name="free_home_delivery.png" />
+		                        	<h:graphicImage library="images" name="cash_on_delivery.png" />
+		                        </div>
+		                    </div>
+		                </div> 
+		                
+		                <!-- Include Footer info -->
+						<ui:include src="../component/common/footer-info.xhtml" />
+		                <div class="footer_new_last">
+		                    Services currently is developing.
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+	</ui:composition>
+</body>
+</html>

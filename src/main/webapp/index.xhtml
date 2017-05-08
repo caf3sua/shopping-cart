@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+
+<h:body>
+	<ui:composition template="template/gridLayout.xhtml">
+		<ui:define name="content">
+			<div class="home-main-container">
+				<a href="#{request.contextPath}/shop/shopping.xhtml">
+					<h:graphicImage library="images/banner" name="banner-1.jpg" />
+					<h:graphicImage library="images/banner" name="banner-2.jpg" />
+				</a>
+			</div>
+   			
+   			<!-- 
+			<h:form>
+			   <h:outputText value="#{home.value}" />
+			</h:form>
+			
+			<a style="color: #FF0000" href="#{request.contextPath}/shop/shopping.xhtml"> Shopping</a><br/><br/>
+			<a style="color: #FF0000" href="#{request.contextPath}/shop/cart.xhtml"> Cart</a><br/><br/>
+			<a style="color: #FF0000" href="#"> Upload product</a><br/><br/> -->
+   		</ui:define>
+	</ui:composition>
+</h:body>
+    
+</html>

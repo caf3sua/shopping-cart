@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+</h:head>
+
+<h:body>
+	<ui:composition template="../template/gridTwoColumnLayout.xhtml">
+		<ui:define name="leftsidebar">
+			<h:outputScript library="js" name="admin.js"  />
+			<h:outputStylesheet library="css" name="hover-min.css"  />
+			<h:form id="form-menu">
+   			<p:dataList value="#{adminView.categories}" var="category" type="ordered" styleClass="lst-categories-menu">
+   				<f:facet name="header">
+		            Product Categories
+		        </f:facet>
+				<p:commandLink id="ajax" styleClass="hvr-float-shadow" update="dtProducts" actionListener="#{adminView.getProductByCategoryId}">
+					<h:graphicImage value="/images/#{category.image}?type=category" width="50" />
+		        	<span class="span-category-name">#{category.name} Category</span>
+					<f:param name="selectedCategoryId" value="#{category.id}" />
+			    </p:commandLink>
+		    </p:dataList>
+		    </h:form>
+   		</ui:define>
+   		
+		<ui:define name="content">
+			<p:growl id="growl" showDetail="false" life="2000" />
+			
+			<div class="container-main clearfix">
+			    <div class="container-wrap clearfix">
+			        <div id="main" class="clearfix">
+			            <div id="content" class="layout-zone-content layout-zone clearfix ">
+			                <div class="page-cart wrap">
+			                    <h1>Edit your fruits product list</h1>
+			                    <div class="clearfix">
+			                        <h:form id="cart-form" prependId="false">
+			                        	<p:growl id="messages" showDetail="true"/>
+			                            <div class="gap-right gap-top">
+			                                <div class="col-wrap clearfix">
+			                                    <div class="col-50">&nbsp;</div>
+			                                </div>
+			                            </div>
+			                                        
+			                            <p:dataTable var="product" value="#{adminView.products}" id="dtProducts" styleClass="borderless list cart"
+					                         rows="5" paginator="true" paginatorPosition="bottom"
+					                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					                         rowsPerPageTemplate="5,10,15">
+			                            	<p:columnGroup type="header">
+									            <p:row>
+									                <p:column headerText="Product" styleClass="col-description "/>
+									                <p:column headerText="Price (250g)" styleClass="text-center col-price admin-price-col" />
+									                <p:column headerText="Quantity (in g)" styleClass="admin-quantity-col" />
+									            </p:row>
+									        </p:columnGroup>
+			                            
+										    <p:column colspan="3" styleClass="admin-product-row-content">
+										    	<div class="admin-product-content">
+											        <div class="cart-image cart-image-des">
+			                                            <a href="#">
+			                                            	<h:graphicImage style="width:80px;margin-right:10px;margin-bottom:10px;" value="/images/#{product.image}?type=product" alt="#{product.name}" title="#{order.productName}"/>
+		                                            	</a>
+			                                        </div>
+			                                        <div class="cart-description float-left">
+			                                            <div>
+			                                                <span>Product Name</span>
+			                                                <input class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all ui-state-disabled admin-product-name-input #{product.disableUpdate ? 'show' : 'hide'}" disabled="disabled" value="#{product.name}" />
+			                                                <p:inputText value="#{product.name}" styleClass="admin-product-name-input #{product.disableUpdate ? 'hide' : 'show'}" id="inputProductName" label="Product Name:" maxlength="255" />
+			                                            </div>
+			                                            <div>
+			                                                <span class="product-id">Product ID: #{product.code}</span><br/>
+			                                            </div>
+			                                        </div>
+			                                        <div class="cart-quantity text-center admin-quantity-col float-right">
+			                                        	<input class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all ui-state-disabled input-quantity quantity admin-input-price #{product.disableUpdate ? 'show' : 'hide'}" disabled="disabled" value="#{product.quantity}" />
+			                                            <p:inputText styleClass="input-quantity quantity admin-input-quantity #{product.disableUpdate ? 'hide' : 'show'}" required="true" id="quantity" value="#{product.quantity}" maxlength="10" />
+															<pe:keyFilter for="quantity" mask="num"/>
+														<div class="cart-validate-message"><h:outputText id="order-message" value="#{product.message}" /></div>
+			                                        </div>
+			                                        <div class="cart-amount text-right admin-price-col float-right admin-product-price-container">
+			                                            <span class="admin-currency-label"><h:outputText value="€ "/></span>
+			                                            <input class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all ui-state-disabled input-quantity quantity admin-input-quantity #{product.disableUpdate ? 'show' : 'hide'}" disabled="disabled" value="#{product.salePrice}" />
+			                                            <p:inputText styleClass="input-quantity quantity admin-input-price #{product.disableUpdate ? 'hide' : 'show'}" required="true" id="price" value="#{product.salePrice}" maxlength="10" />
+															<pe:keyFilter for="quantity" mask="num"/>
+			                                        </div>
+		                                        </div>
+		                                        <div class="admin-product-description">
+		                                        	<div class="clearfix">Product description</div>
+		                                        	<textarea disabled="disabled" cols="3" class="ui-inputfield ui-inputtextarea ui-widget ui-state-default ui-corner-all ui-state-disabled admin-product-des ui-inputtextarea-resizable #{product.disableUpdate ? 'show' : 'hide'}">#{product.description}</textarea>
+		                                        	<p:inputTextarea value="#{product.description}" cols="3" styleClass="admin-product-des #{product.disableUpdate ? 'hide' : 'show'}"></p:inputTextarea>
+		                                        </div>
+		                                        <div class="admin-product-upload-action">
+		                                        	<div class="admin-upload-file">
+		                                        		<p:fileUpload disabled="true" id="admin-product-fileupload-Fake" fileUploadListener="#{adminView.handleFileUpload}"
+		                                        			styleClass="#{product.disableUpdate ? 'show' : 'hide'}" 
+			                                        		mode="advanced" dragDropSupport="false"
+	           												update=":messages" sizeLimit="100000" fileLimit="1" 
+	           												allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+	           											<p:fileUpload id="admin-product-fileupload" fileUploadListener="#{adminView.handleFileUpload}"
+		                                        			styleClass="#{product.disableUpdate ? 'hide' : 'show'}" 
+			                                        		mode="advanced" dragDropSupport="false"
+	           												update=":messages" sizeLimit="100000" fileLimit="1" 
+	           												allowTypes="/(\.|\/)(gif|jpe?g|png)$/" >
+	           												<f:attribute name="productID" value="#{product.id}" />
+	           											</p:fileUpload>
+		                                        	</div>
+		                                        	<div class="admin-product-action">
+		                                                <p>
+		                                                    <span class="margin-left-30 admin-product-action-remove">
+			                                                    <a href="#">
+			                                                    	<h:graphicImage library="images" name="image-delete-item.gif" alt="Delete Item" styleClass="image-delete-item" />
+		                                                    	</a>
+			                                                    <p:commandButton value="Remove" styleClass="borderless button-as-link" action="#{adminView.deleteProduct(product)}" update="dtProducts">
+															        <p:confirm header="Confirmation" message="Are you sure you want to delete this product?" icon="ui-icon-alert" />
+															    </p:commandButton>
+		                                                    </span>
+		                                                    <span class="clearfix margin-left-30 admin-product-action-update #{product.disableUpdate ? 'hide' : 'show'}">
+			                                                    <a href="#">
+			                                                    	<h:graphicImage library="images/icons" name="update-cart-icon.png" alt="Update Item" width="13" styleClass="image-cart-update-item" />
+		                                                    	</a>
+			                                                    <p:commandLink value="Update" id="action-update" styleClass="cart-update" action="#{adminView.updateProductAdmin(product)}" update="dtProducts" />
+		                                                    </span>
+		                                                    <span class="clearfix margin-left-30 admin-product-action-edit #{product.disableUpdate ? 'show' : 'hide'}">
+			                                                    <a href="#">
+			                                                    	<h:graphicImage library="images/icons" name="update-cart-icon.png" alt="Update Item" width="13" styleClass="image-cart-update-item" />
+		                                                    	</a>
+			                                                    <p:commandLink value="Edit" id="action-edit" styleClass="cart-edit" action="#{adminView.enableEditProductAdmin(product)}" update="dtProducts" />
+		                                                    </span>
+		                                                </p>
+		                                            </div>
+		                                        </div>
+		                                        
+										    </p:column>
+										</p:dataTable>
+										<!-- Dialog confirm -->
+										<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+									        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+									    </p:confirmDialog>
+									    
+			                            <div class="cart-other-options col-wrap clearfix">
+			                                <div class="col-50">&nbsp;</div>
+			                                <div class="cart-totals col-50 col-right clearfix">
+			                                    <div class="spacer gap-left clearfix">
+			                                        <div class="col-wrap clearfix">
+			                                            <div class="gap-top">
+			                                                <div class="col-right gap-left -gap-right div-checkout-button">
+			                                                    <h:commandButton type="submit" id="checkout2" styleClass="button-checkout submit" value="Add new Product" action="#{adminView.gotoAddProductPage}" />
+			                                                </div>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </h:form>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+   		</ui:define>
+   		
+	</ui:composition>
+</h:body>
+    
+</html>

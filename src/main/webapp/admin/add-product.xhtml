@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+</h:head>
+
+<h:body>
+	<ui:composition template="../template/gridDashboardLayout.xhtml">
+		<ui:define name="leftsidebar">
+   		</ui:define>
+   		
+		<ui:define name="content">
+			<p:growl id="messages" showDetail="false" life="2000" />
+   			<h1>Product Editor</h1>
+   			<h:form id="add-product">
+   				<div class="admin-product-content">
+			        <div class="cart-image cart-image-des">
+						<a href="#">
+							<h:graphicImage style="width:80px;margin-right:10px;margin-bottom:10px;"
+							id="imageProduct" value="/images/#{adminView.addProduct.image}?type=product" 
+							alt="#{adminView.addProduct.name}" title="#{order.productName}"/>
+							<div style="display: none;">
+								<p:inputText value="#{adminView.addProduct.image}" id="inputImage" />
+							</div>
+						</a>
+					</div>
+                    <div class="cart-description float-left">
+                        <div>
+                            <span>Product Name</span>
+                            <p:inputText value="#{adminView.addProduct.name}" styleClass="admin-product-name-input" id="inputProductName" label="Product Name:" maxlength="255" />
+                        </div>
+                        <br />
+                        <div>
+                        	<span>Choose category</span>
+                            <h:selectOneMenu id="txt3" value="#{adminView.addProduct.categoryId}" required="true" label="Category">
+				                <f:selectItems value="#{adminView.selectCategoryList}" />
+				            </h:selectOneMenu>
+                        </div>
+                    </div>
+					<div class="add-product-quantity float-left">
+						<div>
+                            <span>Product quantity</span>
+                            <p:inputText styleClass="input-quantity quantity" required="true" id="quantity" value="#{adminView.addProduct.quantity}" maxlength="10" >
+								<pe:keyFilter for="quantity" mask="num"/>
+								<f:validator validatorId="QuantityValidator" />
+							</p:inputText>
+							<div class="cart-validate-message"><h:message for="quantity" style="color:red" /><h:outputText id="order-message" value="#{adminView.addProduct.message}" /></div>
+                        </div>
+					</div>
+                    <div class="float-left add-product-price">
+                    	<div>
+                        	<span>Product price in €</span>
+                        	<p:inputText styleClass="input-quantity quantity" required="true" id="price" value="#{adminView.addProduct.salePrice}" maxlength="10">
+								<pe:keyFilter for="quantity" mask="num"/>
+								<f:validator validatorId="PriceValidator" />
+							</p:inputText>
+							<div class="cart-validate-message"><h:message for="price" style="color:red" /></div>
+						</div>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+                <div class="float-left admin-product-description">
+                	<div class="clearfix">Product description</div>
+                	<p:inputTextarea value="#{adminView.addProduct.description}" cols="3" styleClass="admin-product-des"></p:inputTextarea>
+                </div>
+                <div class="clearfix" />
+                <div class="admin-add-product-upload-action">
+                   	<div class="admin-upload-file">
+						<p:fileUpload id="admin-product-fileupload" fileUploadListener="#{adminView.handleFileUploadAddProduct}"
+                   			styleClass="" 
+                    		mode="advanced" dragDropSupport="false"
+							update="imageProduct" sizeLimit="100000" fileLimit="1" 
+							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                   	</div>
+               	</div>
+               	<div class="cart-other-options col-wrap clearfix">
+	                <div class="cart-totals col-50 col-right clearfix">
+	                    <div class="spacer gap-left clearfix">
+	                        <div class="col-wrap clearfix">
+	                            <div class="gap-top">
+	                                <div class="col-right gap-left -gap-right div-checkout-button">
+	                                    <h:commandButton type="submit" id="checkout1" styleClass="button-checkout submit" value="Save" action="#{adminView.addProductAdmin}" />
+	                                </div>
+	                                <div class="col-right gap-left -gap-right div-checkout-button">
+	                                    <h:commandButton type="submit" id="checkout2" styleClass="button-checkout submit" value="Cancel" action="#{adminView.backToMainAdmin}" />
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+   			</h:form>
+   		</ui:define>
+   		
+   		<ui:define name="rightsidebar">
+   		</ui:define>
+	</ui:composition>
+</h:body>
+    
+</html>

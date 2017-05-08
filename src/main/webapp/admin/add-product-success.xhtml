@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+
+<h:body>
+	<ui:composition template="../template/gridLayout.xhtml">
+		<ui:define name="content">
+			<div class="container-main clearfix">
+				<div class="doc1024x768C container-wrap clearfix">
+					<div id="main" class="clearfix">
+					<div id="content" class="layout-zone-content layout-zone clearfix " style="width: 980px;">
+						<div class="page-cart wrap">
+						<h1>Your Cart</h1>
+							<div class="spacer msg-notice bold">
+							Added new product !!!
+							<ul class="list">
+								<li>Would you like to <a href="#{request.contextPath}/admin/main-admin.xhtml">main admin</a>?</li>
+								<li>or go to <a href="#{request.contextPath}/admin/add-product.xhtml">add product editor</a>?</li>
+							</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+   		</ui:define>
+	</ui:composition>
+</h:body>
+    
+</html>
